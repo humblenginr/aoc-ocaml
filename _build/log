@@ -1,0 +1,5 @@
+# dune init project aoc_ocaml
+# OCAMLPARAM: unset
+# Shared cache: disabled
+# Workspace root: /Users/humblenginr/code/aoc_ocaml
+# Auto-detected concurrency: 10
