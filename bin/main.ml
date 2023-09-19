@@ -29,3 +29,17 @@
     | h :: rest ->  max_of_list rest (max highest h)
 
 let () = print_endline (string_of_int  (max_of_list (group lines []) 0))
+
+
+let rec firstk k xs = match xs with
+| [] -> failwith "firstk"
+| x::xs -> if k=1 then [x] else x::firstk (k-1) xs;;
+
+let compare_inverse x y = if x == y then 0 else if x > y then -1 else 1
+
+let max3 elf_calories = firstk 3 (List.sort compare_inverse elf_calories)
+
+let sum = List.fold_left (+) 0;;
+
+let () = print_endline (string_of_int (sum (max3 (group lines []))))
+
