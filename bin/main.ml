@@ -27,7 +27,8 @@ let rec rearrange_stacks input_array instrs = match instrs with
                       let to_list = input_array.(too-1) in
                       let elements_to_be_added = List.take from_list qty in
                       let () = Array.set input_array (from-1) (List.drop from_list qty) in
-                      let () = Array.set input_array (too-1) (List.append (List.rev elements_to_be_added) to_list) in
+                      (* Adding List.rev will be for part-1 of the problem *)
+                      let () = Array.set input_array (too-1) (List.append (elements_to_be_added) to_list) in
                       rearrange_stacks input_array xs
 
   (* here we assume that stack is a list and is arranged *)
