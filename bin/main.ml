@@ -20,15 +20,15 @@
                                                          let left_slice = Array.slice arr 0 item_idx in 
                                                          let right_slice = Array.slice arr (item_idx+1) (Array.length arr) in 
                                                           let value = arr.(item_idx) in
-                                                            let left_blocking_tree_idx = ( match (Array.findi left_slice ~f:(fun _ x -> x >= value)) with 
+                                                            let left_blocking_tree_idx = ( match (Array.findi (Array.rev left_slice) ~f:(fun _ x -> x >= value)) with 
                                                               | Some (x, _) -> x
-                                                              | _ -> 0
+                                                              | _ -> (Array.length left_slice) - 1
                                                               ) in
                                                             let right_blocking_tree_idx  = ( match (Array.findi right_slice ~f:(fun _ x -> x >= value)) with
                                                               | Some (x, _) -> x
                                                               | _ -> (Array.length right_slice) - 1
                                                               ) in
-                                                              (item_idx - left_blocking_tree_idx) * (right_blocking_tree_idx + 1)
+                                                              (left_blocking_tree_idx + 1) * (right_blocking_tree_idx + 1)
       in (single_array_scenic_score row_arr col_idx) * (single_array_scenic_score col_arr row_idx)
                     
   let get_row_col matrix (row, col) = matrix.(row), Array.map matrix ~f:(fun row -> row.(col))
@@ -54,6 +54,8 @@
               let (new_row, new_col) = if Int.equal col_idx (row_col_length - 1) then (row_idx + 1, 0) else (row_idx, col_idx + 1) in 
                 if Int.equal row_idx (row_col_length - 1) && Int.equal col_idx (row_col_length - 1) then score :: scores else
                   helper matrix (new_row, new_col) (score :: scores) 
-    in helper input_matrix (0,0) [] |> List.max_elt ~compare:Int.compare
+    in helper input_matrix (0,0) [] 
+
+  let res = List.max_elt ~compare:Int.compare part2
                                               
 
